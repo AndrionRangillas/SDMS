@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SDMS — Dashboard</title>
+    <meta name="description" content="Student Discipline Management System — Admin Dashboard" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/vendor/chart.umd.js"></script>
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        if (savedTheme === 'light') document.documentElement.setAttribute('data-theme', 'light');
+    </script>
+</head>
+
+<body>
+    <div class="app-layout">
+
+        <!-- Sidebar Overlay (mobile) -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- ====== SIDEBAR ====== -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <img src="nbsclogo.png" alt="NBSC Logo"
+                    style="width: 44px; height: 44px; object-fit: contain; margin-right: 8px;">
+                <div class="brand-text">
+                    <h2>SDMS</h2>
+                    <p>Discipline Office</p>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-label">Main</div>
+                <div class="nav-item active" data-view="dashboard">
+                    <a href="#"><span class="nav-icon">📊</span> Dashboard</a>
+                </div>
+                <div class="nav-item" data-view="students">
+                    <a href="#"><span class="nav-icon">👥</span> Students</a>
+                </div>
+                <div class="nav-item" data-view="complaints">
+                    <a href="#"><span class="nav-icon">📋</span> Complaints</a>
+                </div>
+
+                <div class="nav-section-label">Records</div>
+                <div class="nav-item" data-view="violations">
+                    <a href="#"><span class="nav-icon">⚠️</span> Violation Slip</a>
+                </div>
+                <div class="nav-item" data-view="community-service">
+                    <a href="#"><span class="nav-icon">🤝</span> Community Service</a>
+                </div>
+                <div class="nav-item" data-view="history">
+                    <a href="#"><span class="nav-icon">📁</span> Record History</a>
+                </div>
+
+                <div class="nav-section-label">Good Moral</div>
+                <div class="nav-item" data-view="gm-issuance">
+                    <a href="#"><span class="nav-icon">📖</span> GM Issuance</a>
+                </div>
+                <div class="nav-item" data-view="gm-certificate">
+                    <a href="#"><span class="nav-icon">🏅</span> GM Certificate</a>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="logout-btn" id="sidebarLogout">
+                    <span>🚪</span> Logout
+                </button>
+            </div>
+        </aside>
+
+        <!-- ====== MAIN CONTENT ====== -->
+        <div class="main-content">
+
+            <!-- Top Nav -->
+            <header class="topnav">
+                <button class="menu-toggle" id="menuToggle" style="display:flex">☰</button>
+                <div class="topnav-search">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="globalSearch" placeholder="Search students, complaints..." />
+                </div>
+                <div class="topnav-right">
+                    <button id="themeToggle" class="btn btn-icon theme-toggle" aria-label="Toggle Theme"
+                        style="font-size:1.2rem; background:transparent; border:none; color:var(--text-primary); transition:var(--transition); margin-right:8px;">🌙</button>
+                    <div class="admin-badge">
+                        <div class="admin-avatar" id="adminAvatar">A</div>
+                        <div class="admin-info">
+                            <span id="adminName">Admin</span>
+                            <small>Administrator</small>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content (dynamically rendered) -->
+            <main class="page-content" id="pageContent">
+                <!-- Content loaded by JS -->
+            </main>
+        </div>
+    </div>
+
+    <!-- Toast container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Modals Portal -->
+    <div id="modalPortal"></div>
+
+    <!-- JS Modules -->
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/students.js"></script>
+    <script src="js/complaints.js"></script>
+    <script src="js/violations.js"></script>
+    <script src="js/community-service.js"></script>
+    <script src="js/good-moral-issuance.js"></script>
+    <script src="js/goodmoral.js"></script>
+    <script src="js/history.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        const themeBtn = document.getElementById('themeToggle');
+        function updateThemeBtn() {
+            themeBtn.textContent = document.documentElement.getAttribute('data-theme') === 'light' ? '☀️' : '🌙';
+        }
+        updateThemeBtn();
+        themeBtn.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateThemeBtn();
+        });
+    </script>
+</body>
+
+</html>

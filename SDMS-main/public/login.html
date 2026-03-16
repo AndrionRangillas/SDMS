@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SDMS — Admin Login</title>
+  <meta name="description" content="Student Discipline Management System — Secure Admin Login" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script>
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    if (savedTheme === 'light') document.documentElement.setAttribute('data-theme', 'light');
+  </script>
+</head>
+
+<body>
+  <div class="login-page">
+    <a href="index.html" class="btn btn-icon" aria-label="Go Back"
+      style="position:absolute; top:20px; left:20px; font-size:1.2rem; background:var(--bg-card); border:1px solid var(--border); color:var(--text-primary); z-index:100; text-decoration:none; display:flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:var(--radius-sm); transition:var(--transition); box-shadow:var(--shadow);">⬅️</a>
+    <button id="themeToggle" class="btn btn-icon theme-toggle" aria-label="Toggle Theme"
+      style="position:absolute; top:20px; right:20px; font-size:1.2rem; background:var(--bg-card); border:1px solid var(--border); color:var(--text-primary); z-index:100; transition:var(--transition); width:44px; height:44px; border-radius:var(--radius-sm); display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow);">🌙</button>
+    <div class="login-card">
+      <div class="login-logo">
+        <img src="nbsclogo.png" alt="NBSC Logo" style="width: 64px; height: 64px; object-fit: contain;">
+        <h1>SDMS</h1>
+        <p>Student Discipline Management System</p>
+      </div>
+
+      <div id="loginError" class="login-error" role="alert"></div>
+
+      <form class="login-form" id="loginForm" autocomplete="off">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="admin@example.com" required
+            autocomplete="username" />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-wrapper">
+            <input type="password" id="password" name="password" placeholder="Enter your password" required
+              autocomplete="current-password" />
+            <button type="button" class="eye-toggle" id="eyeToggle" aria-label="Toggle password visibility">
+              👁️
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" id="loginSubmit">Sign In</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script>
+    const themeBtn = document.getElementById('themeToggle');
+    function updateThemeBtn() {
+      themeBtn.textContent = document.documentElement.getAttribute('data-theme') === 'light' ? '☀️' : '🌙';
+    }
+    updateThemeBtn();
+    themeBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateThemeBtn();
+    });
+  </script>
+</body>
+
+</html>

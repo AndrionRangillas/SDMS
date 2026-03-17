@@ -1,49 +1,48 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const supabase = require('../supabase');
 
-// POST /api/login
+// POST /api/auth/login - Master Key Authentication
 router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
-    if (!email || !password) {
-        return res.status(400).json({ error: 'Email and password are required' });
+    const { masterKey } = req.body;
+    
+    if (!masterKey) {
+        return res.status(400).json({ error: 'Master key is required' });
     }
 
     try {
-        const { data: user, error } = await supabase
-            .from('users')
-            .select('*')
-            .eq('email', email)
-            .single();
-
-        if (error || !user) {
-            return res.status(401).json({ error: 'Invalid email or password' });
+        // Check if the provided master key matches the environment variable
+        if (masterKey !== process.env.MASTER_KEY) {
+            return res.status(401).json({ error: 'Invalid master key' });
         }
 
-        const valid = await bcrypt.compare(password, user.password_hash);
-        if (!valid) {
-            return res.status(401).json({ error: 'Invalid email or password' });
-        }
-
+        // Generate JWT token for authenticated session
         const token = jwt.sign(
-            { id: user.id, email: user.email, role: user.role },
+            { 
+                id: 'admin', 
+                email: 'admin@sdms.edu', 
+                role: 'admin',
+                authenticated: true 
+            },
             process.env.JWT_SECRET,
             { expiresIn: '8h' }
         );
 
         res.json({
             token,
-            user: { id: user.id, email: user.email, role: user.role }
+            user: { 
+                id: 'admin', 
+                email: 'admin@sdms.edu', 
+                role: 'admin' 
+            }
         });
     } catch (err) {
         console.error('Login error:', err);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ error: 'Server error' });
     }
 });
 
-// POST /api/logout
+// POST /api/auth/logout
 router.post('/logout', (req, res) => {
     res.json({ message: 'Logged out successfully' });
 });

@@ -34,13 +34,13 @@ if (loginForm) {
     // Redirect if already logged in
     if (getToken()) window.location.href = '/dashboard.html';
 
-    // Show / hide password
+    // Show / hide master key
     const eyeToggle = document.getElementById('eyeToggle');
-    const passwordInput = document.getElementById('password');
-    if (eyeToggle && passwordInput) {
+    const masterKeyInput = document.getElementById('masterKey');
+    if (eyeToggle && masterKeyInput) {
         eyeToggle.addEventListener('click', () => {
-            const isHidden = passwordInput.type === 'password';
-            passwordInput.type = isHidden ? 'text' : 'password';
+            const isHidden = masterKeyInput.type === 'password';
+            masterKeyInput.type = isHidden ? 'text' : 'password';
             eyeToggle.textContent = isHidden ? '🙈' : '👁️';
         });
     }
@@ -50,8 +50,7 @@ if (loginForm) {
         e.preventDefault();
         const errorDiv = document.getElementById('loginError');
         const submitBtn = document.getElementById('loginSubmit');
-        const email = document.getElementById('email').value.trim();
-        const password = document.getElementById('password').value;
+        const masterKey = document.getElementById('masterKey').value.trim();
 
         errorDiv.style.display = 'none';
         submitBtn.disabled = true;
@@ -61,7 +60,7 @@ if (loginForm) {
             const res = await fetch('/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ masterKey })
             });
             const data = await res.json();
 

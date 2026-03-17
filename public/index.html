@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Northern Bukidnon State College - SDMS</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script>
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    if (savedTheme === 'light') document.documentElement.setAttribute('data-theme', 'light');
+  </script>
+</head>
+
+<body>
+  <header class="landing-header">
+    <div class="landing-logo">
+      <img src="nbsclogo.png" alt="NBSC Logo" style="width: 54px; height: 54px; object-fit: cover; border-radius: 50%;">
+      <h1>Northern Bukidnon State College</h1>
+    </div>
+    <div class="landing-actions">
+      <button id="themeToggle" class="btn btn-icon theme-toggle" aria-label="Toggle Theme"
+        style="font-size:1.2rem; background:transparent; border:none; color:var(--text-primary); transition:var(--transition); margin-right:8px;">🌙</button>
+      <a href="login.html" class="btn btn-primary">Login</a>
+    </div>
+  </header>
+
+  <main class="landing-main">
+    <div class="landing-hero">
+      <h2>Welcome to NBSC SDMS</h2>
+      <p>Student Discipline Management System</p>
+    </div>
+
+    <div class="landing-grid">
+      <!-- Vision -->
+      <div class="landing-card" style="animation-delay: 0.1s">
+        <div class="card-icon blue">👁️</div>
+        <h3>Vision</h3>
+        <p>"A recognized institution for inclusive, culturally responsive, and sustainable higher education."</p>
+      </div>
+
+      <!-- Mission -->
+      <div class="landing-card" style="animation-delay: 0.2s">
+        <div class="card-icon green">🎯</div>
+        <h3>Mission</h3>
+        <p>"Northern Bukidnon State College advances excellence in teaching, innovative research, and impactful
+          community service through strategic partnerships, and inclusive and equitable education, empowering
+          transformative development in Bukidnon and Region X."</p>
+      </div>
+
+      <!-- Goals -->
+      <div class="landing-card" style="animation-delay: 0.3s">
+        <div class="card-icon orange">📈</div>
+        <h3>Goals</h3>
+        <ul>
+          <li>Establish effective governance and efficient resource management towards performance excellence.</li>
+          <li>Promote transformative excellence in student-centered academic innovation.</li>
+          <li>Initiate a vibrant research culture, technology commercialization, and inclusive extension programs.</li>
+        </ul>
+      </div>
+
+      <!-- Core Values -->
+      <div class="landing-card" style="animation-delay: 0.4s">
+        <div class="card-icon purple">💎</div>
+        <h3>Core Values</h3>
+        <ul class="core-values-list">
+          <li><strong>R</strong>esponsibility</li>
+          <li><strong>A</strong>daptivity</li>
+          <li><strong>I</strong>nclusivity</li>
+          <li><strong>S</strong>ustainability</li>
+          <li><strong>E</strong>xcellence</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const themeBtn = document.getElementById('themeToggle');
+    function updateThemeBtn() {
+      themeBtn.textContent = document.documentElement.getAttribute('data-theme') === 'light' ? '☀️' : '🌙';
+    }
+    updateThemeBtn();
+    themeBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateThemeBtn();
+    });
+  </script>
+</body>
+
+</html>
